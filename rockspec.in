@@ -2,7 +2,7 @@ rockspec_format = "3.0"
 package = "djot"
 version = "_VERSION-_REVISION"
 source = {
-    url = "git+https://github.com/jgm/djot",
+    url = "git+https://github.com/jgm/djot.lua",
     tag = "_VERSION"
 }
 description = {
@@ -11,9 +11,9 @@ description = {
      Djot is a light markup format and a library and program
      that parses it.
    ]],
-   homepage = "https://github.com/jgm/djot",
+   homepage = "https://github.com/jgm/djot.lua",
    license = "MIT",
-   issues_url = "https://github.com/jgm/djot/issues",
+   issues_url = "https://github.com/jgm/djot.lua/issues",
    maintainer = "John MacFarlane <jgm@berkeley.edu>"
 }
 dependencies = {
