@@ -9,7 +9,7 @@ VIMDIR?=~/.vim
 TIMEOUT=perl -e 'alarm shift; exec @ARGV'
 TEMPFILE := $(shell mktemp)
 
-all: test doc/syntax.html doc/djot.1 doc/api/index.html
+all: test doc/djot.1 doc/api/index.html
 
 test: $(ROCKSPEC)
 	luarocks test
@@ -20,7 +20,6 @@ testall: test pathological fuzz
 
 ci: testall install
 	make -C clib
-	make -C web oldplayground/djot.js
 	pandoc --print-default-data-file MANUAL.txt > m.txt
 	pandoc -t djot-writer.lua m.txt -o m.dj
 	pandoc -f djot-reader.lua m.dj -o m.html
@@ -70,9 +69,6 @@ linecount:
 check:
 	luacheck $(SOURCES) $(TESTSOURCES)
 .PHONY: check
-
-doc/syntax.html: doc/syntax.md
-	pandoc --lua-filter doc/code-examples.lua $< -t html -o $@ -s --css doc/syntax.css --self-contained --wrap=preserve --toc --section-divs -Vpagetitle="Djot syntax reference"
 
 doc/djot.1: doc/djot.md
 	pandoc \
