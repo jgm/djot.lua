@@ -134,7 +134,7 @@ local function parse_and_render_events(input, warn)
 end
 
 --- djot version (string)
-local version = "0.2.0"
+local version = "0.2.1"
 
 --- @export
 local G = {
