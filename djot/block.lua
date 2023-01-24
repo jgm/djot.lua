@@ -27,9 +27,9 @@ local function get_list_styles(marker)
     return {(marker:gsub("%d+","1"))}
   -- in ambiguous cases we return two values
   elseif find(marker, "^[(]?[ivxlcdm][).]") then
-    return {(marker:gsub("%a+", "a")), (marker:gsub("%a+", "i"))}
+    return {(marker:gsub("%a+", "i")), (marker:gsub("%a+", "a"))}
   elseif find(marker, "^[(]?[IVXLCDM][).]") then
-    return {(marker:gsub("%a+", "A")), (marker:gsub("%a+", "I"))}
+    return {(marker:gsub("%a+", "I")), (marker:gsub("%a+", "A"))}
   elseif find(marker, "^[(]?%l[).]") then
     return {(marker:gsub("%l", "a"))}
   elseif find(marker, "^[(]?%u[).]") then
