@@ -167,30 +167,32 @@ function Renderer:table(node)
   local caption = {}
   local aligns = nil
   local widths = nil
-  for i=2,#node do
-    local row = node[i]
-    if row[1] == "caption" then
+  local content = node.c
+  for i=1,#content do
+    local row = content[i]
+    if row.t == "caption" then
       caption = self:render_children(row)
-    elseif row[1] == "row" then
-      if not aligns then
-        aligns = {}
-        widths = {}
-        for j=2,#row do
-          local align = row[j].align
-          if not align then
-            aligns[j - 1] = "AlignDefault"
-          elseif align == "center" then
-              aligns[j - 1] = "AlignCenter"
-          elseif align == "left" then
-              aligns[j - 1] = "AlignLeft"
-          elseif align == "right" then
-              aligns[j - 1] = "AlignRight"
-          end
-          widths[j - 1] = 0
+    elseif row.t == "row" then
+      local cells = {}
+      for j=1,#row.c do
+        cells[j] = self:render_node(row.c[j])
+        if not aligns then
+          aligns = {}
+          widths = {}
+            local align = row.c[j].align
+            if not align then
+              aligns[j] = "AlignDefault"
+            elseif align == "center" then
+                aligns[j] = "AlignCenter"
+            elseif align == "left" then
+                aligns[j] = "AlignLeft"
+            elseif align == "right" then
+                aligns[j] = "AlignRight"
+            end
+            widths[j] = 0
         end
       end
-      local cells = self:render_children(row)
-      if i == 2 and row.head then
+      if row.head then
         headers = cells
       else
         rows[#rows + 1] = cells
