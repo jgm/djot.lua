@@ -165,8 +165,8 @@ function Renderer:table(node)
   local rows = {}
   local headers = {}
   local caption = {}
-  local aligns = nil
-  local widths = nil
+  local aligns = {}
+  local widths = {}
   local content = node.c
   for i=1,#content do
     local row = content[i]
@@ -176,9 +176,7 @@ function Renderer:table(node)
       local cells = {}
       for j=1,#row.c do
         cells[j] = self:render_node(row.c[j])
-        if not aligns then
-          aligns = {}
-          widths = {}
+        if not aligns[j] then
             local align = row.c[j].align
             if not align then
               aligns[j] = "AlignDefault"
