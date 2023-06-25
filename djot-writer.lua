@@ -438,6 +438,7 @@ Inlines.Note = function(el)
 end
 
 function Writer (doc, opts)
+  PANDOC_WRITER_OPTIONS = opts
   local d = blocks(doc.blocks, blankline)
   local notes = {}
   for i=1,#footnotes do
