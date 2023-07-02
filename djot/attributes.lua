@@ -76,8 +76,11 @@ handlers[SCANNING] = function(self, pos)
 end
 
 handlers[SCANNING_COMMENT] = function(self, pos)
-  if sub(self.subject, pos, pos) == "%" then
+  local c = sub(self.subject, pos, pos)
+  if c == "%" then
     return SCANNING
+  elseif c == "}" then
+    return DONE
   else
     return SCANNING_COMMENT
   end
