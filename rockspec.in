@@ -21,6 +21,7 @@ dependencies = {
 }
 test_dependencies = {
    "lua >= 5.1",
+   "luaposix >= 36.2"
 }
 build = {
    type = "builtin",
