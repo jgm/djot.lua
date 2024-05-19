@@ -1,4 +1,4 @@
---- @module djot.filter
+--- @module 'djot.filter'
 --- Support filters that walk the AST and transform a
 --- document between parsing and rendering, like pandoc Lua filters.
 ---
