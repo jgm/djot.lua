@@ -1,26 +1,5 @@
---- @module 'djot.ast'
+--- @module djot.ast
 --- Construct an AST for a djot document.
-
---- @class Attributes
---- @field class? string
---- @field id? string
-
---- @class AST
---- @field t string tag for the node
---- @field s? string text for the node
---- @field c AST[] child node
---- @field alias string
---- @field level integer
---- @field startidx integer
---- @field startmarker string
---- @field styles table
---- @field style_marker string
---- @field attr Attributes
---- @field display boolean
---- @field references table
---- @field footnotes table
---- @field pos? string[]
---- @field destination? string[]
 
 if not utf8 then -- if not lua 5.3 or higher...
   -- this is needed for the __pairs metamethod, used below
@@ -233,7 +212,7 @@ mt.__pairs = sortedpairs(function(a,b)
 
 --- Create a new AST node.
 --- @param tag (string) tag for the node
---- @return (AST) node (table)
+--- @return node (table)
 local function new_node(tag)
   local node = { t = tag, c = nil }
   setmetatable(node, mt)
@@ -241,8 +220,8 @@ local function new_node(tag)
 end
 
 --- Add `child` as a child of `node`.
---- @param node (AST) node parent node
---- @param child (AST) node child node
+--- @param node parent node
+--- @param child child node
 local function add_child(node, child)
   if (not node.c) then
     node.c = {child}
@@ -252,15 +231,15 @@ local function add_child(node, child)
 end
 
 --- Returns true if `node` has children.
---- @param node (AST) node to check
---- @return (boolean) true if node has children
+--- @param node node to check
+--- @return true if node has children
 local function has_children(node)
   return (node.c and #node.c > 0)
 end
 
 --- Returns an attributes object.
---- @param tbl (Attributes?) table of attributes and values
---- @return (Attributes) attributes object (table including special metatable for
+--- @param tbl table of attributes and values
+--- @return attributes object (table including special metatable for
 --- deterministic order of iteration)
 local function new_attributes(tbl)
   local attr = tbl or {}
@@ -271,7 +250,7 @@ local function new_attributes(tbl)
 end
 
 --- Insert an attribute into an attributes object.
---- @param attr (Attributes)
+--- @param attr attributes object
 --- @param key (string) key of new attribute
 --- @param val (string) value of new attribute
 local function insert_attribute(attr, key, val)
@@ -288,8 +267,8 @@ local function insert_attribute(attr, key, val)
 end
 
 --- Copy attributes from `source` to `target`.
---- @param target (Attributes)
---- @param source (table) associating keys and values
+--- @param target attributes object
+--- @param source table associating keys and values
 local function copy_attributes(target, source)
   if source then
     for k,v in pairs(source) do
@@ -298,8 +277,6 @@ local function copy_attributes(target, source)
   end
 end
 
---- @param targetnode (AST)
---- @param cs (AST)
 local function insert_attributes_from_nodes(targetnode, cs)
   targetnode.attr = targetnode.attr or new_attributes()
   local i=1
@@ -320,7 +297,6 @@ local function insert_attributes_from_nodes(targetnode, cs)
   end
 end
 
---- @param node (AST)
 local function make_definition_list_item(node)
   node.t = "definition_list_item"
   if not has_children(node) then
@@ -404,8 +380,8 @@ end
 
 --- Create an abstract syntax tree based on an event
 --- stream and references.
---- @param parser (Parser) djot streaming parser
---- @param sourcepos (boolean) if true, include source positions
+--- @param parser djot streaming parser
+--- @param sourcepos if true, include source positions
 --- @return table representing the AST
 local function to_ast(parser, sourcepos)
   local subject = parser.subject
@@ -669,7 +645,6 @@ local function to_ast(parser, sourcepos)
         elseif node.t == "attributes" then
           -- parse attributes, add to last node
           local tip = containers[#containers]
-          --- @type AST|false
           local prevnode = has_children(tip) and tip.c[#tip.c]
           if prevnode then
             local endswithspace = false
@@ -1005,8 +980,9 @@ end
 
 --- Render an AST in human-readable form, with indentation
 --- showing the hierarchy.
---- @param doc (AST) djot AST
---- @param handle (StringHandle) handle to which to write content
+--- @param doc (table) djot AST
+--- @param handle handle to which to write content
+--- @return result of flushing handle
 local function render(doc, handle)
   render_node(doc, handle, 0)
   if next(doc.references) ~= nil then

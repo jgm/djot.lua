@@ -43,11 +43,6 @@ local function get_list_styles(marker)
   end
 end
 
----@class Parser
----@field subject string
----@field warn function
----@field matches table
----@field containers table
 local Parser = {}
 
 function Parser:new(subject, warn)
