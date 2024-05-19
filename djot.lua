@@ -1,4 +1,4 @@
---- @module djot
+--- @module 'djot'
 --- Parse and render djot light markup format. See https://djot.net.
 ---
 --- @usage
@@ -33,8 +33,10 @@ local html = require("djot.html")
 local json = require("djot.json")
 local filter = require("djot.filter")
 
+--- @class StringHandle
 local StringHandle = {}
 
+--- @return (StringHandle)
 function StringHandle:new()
   local buffer = {}
   setmetatable(buffer, StringHandle)
@@ -42,21 +44,23 @@ function StringHandle:new()
   return buffer
 end
 
+--- @param s (string)
 function StringHandle:write(s)
   self[#self + 1] = s
 end
 
+--- @return (string)
 function StringHandle:flush()
   return table.concat(self)
 end
 
 --- Parse a djot text and construct an abstract syntax tree (AST)
 --- representing the document.
---- @param input input string
---- @param sourcepos if true, source positions are included in the AST
---- @param warn function that processes a warning, accepting a warning
+--- @param input (string) input string
+--- @param sourcepos (boolean) if true, source positions are included in the AST
+--- @param warn (function) function that processes a warning, accepting a warning
 --- object with `pos` and `message` fields.
---- @return AST
+--- @return (AST)
 local function parse(input, sourcepos, warn)
   local parser = Parser:new(input, warn)
   return ast.to_ast(parser, sourcepos)
@@ -65,10 +69,10 @@ end
 --- Parses a djot text and returns an iterator over events, consisting
 --- of a start position (bytes), and an position (bytes), and an
 --- annotation.
---- @param input input string
---- @param warn function that processes a warning, accepting a warning
+--- @param input (string) input string
+--- @param warn (function) function that processes a warning, accepting a warning
 --- object with `pos` and `message` fields.
---- @return an iterator over events.
+--- @return integer, integer, string an iterator over events.
 ---
 ---     for startpos, endpos, annotation in djot.parse_events("hello *world") do
 ---     ...
@@ -78,8 +82,8 @@ local function parse_events(input, warn)
 end
 
 --- Render a document's AST in human-readable form.
---- @param doc the AST
---- @return rendered AST (string)
+--- @param doc (AST) the AST
+--- @return (string) rendered AST
 local function render_ast_pretty(doc)
   local handle = StringHandle:new()
   ast.render(doc, handle)
@@ -87,15 +91,15 @@ local function render_ast_pretty(doc)
 end
 
 --- Render a document's AST in JSON.
---- @param doc the AST
---- @return rendered AST (JSON string)
+--- @param doc (AST) the AST
+--- @return (string) rendered AST (JSON string)
 local function render_ast_json(doc)
   return json.encode(doc) .. "\n"
 end
 
 --- Render a document as HTML.
---- @param doc the AST
---- @return rendered document (HTML string)
+--- @param doc (AST) the AST
+--- @return (string) rendered document (HTML string)
 local function render_html(doc)
   local handle = StringHandle:new()
   local renderer = html.Renderer:new()
@@ -104,19 +108,19 @@ local function render_html(doc)
 end
 
 --- Render an event as a JSON array.
---- @param startpos starting byte position
---- @param endpos ending byte position
---- @param annotation annotation of event
---- @return rendered event (JSON string)
+--- @param startpos (integer) starting byte position
+--- @param endpos (integer) ending byte position
+--- @param annotation (string) annotation of event
+--- @return (string) rendered event (JSON string)
 local function render_event(startpos, endpos, annotation)
   return string.format("[%q,%d,%d]", annotation, startpos, endpos)
 end
 
 --- Parse a document and render as a JSON array of events.
---- @param input the djot document (string)
---- @param warn function that emits warnings, taking as argumnet
+--- @param input (string) the djot document
+--- @param warn (function) function that emits warnings, taking as argumnet
 --- an object with fields 'message' and 'pos'
---- @return rendered events (JSON string)
+--- @return (string) rendered events (JSON string)
 local function parse_and_render_events(input, warn)
   local handle = StringHandle:new()
   local idx = 0
