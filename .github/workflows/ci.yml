@@ -38,7 +38,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Install mingw
       run: |
           choco install mingw
@@ -60,7 +60,7 @@ jobs:
           - '5.4'
           - 'luajit'
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - uses: r-lib/actions/setup-pandoc@v1
       with:
         pandoc-version: '2.19.2'
