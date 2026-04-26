@@ -338,6 +338,9 @@ function Renderer:link(node)
                      title, to_attr(attrs))
 end
 
+Renderer.url = Renderer.link
+Renderer.email = Renderer.link
+
 function Renderer:image(node)
   local attrs = {}
   local dest = node.destination
