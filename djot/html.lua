@@ -61,6 +61,15 @@ Renderer.html_escapes =
      [">"] = "&gt;",
      ["&"] = "&amp;",
      ['"'] = "&quot;" }
+Renderer.html_entities =
+   { nbsp = "&#x00a0;",
+     ndash = "&#x2013;",
+     mdash = "&#x2014;",
+     lsquo = "&#x2018;",
+     rsquo = "&#x2019;",
+     ldquo = "&#x201c;",
+     rdquo = "&#x201d;",
+     hellip = "&#x2026;" }
 
 function Renderer:escape_html(s)
   if find(s, '[<>&]') then
@@ -382,7 +391,7 @@ function Renderer:hardbreak()
 end
 
 function Renderer:nbsp()
-  self.out("&nbsp;")
+  self.out(self.html_entities.nbsp)
 end
 
 function Renderer:verbatim(node)
@@ -486,43 +495,43 @@ function Renderer:strong(node)
 end
 
 function Renderer:double_quoted(node)
-  self.out("&ldquo;")
+  self.out(self.html_entities.ldquo)
   self:render_children(node)
-  self.out("&rdquo;")
+  self.out(self.html_entities.rdquo)
 end
 
 function Renderer:single_quoted(node)
-  self.out("&lsquo;")
+  self.out(self.html_entities.lsquo)
   self:render_children(node)
-  self.out("&rsquo;")
+  self.out(self.html_entities.rsquo)
 end
 
 function Renderer:left_double_quote()
-  self.out("&ldquo;")
+  self.out(self.html_entities.ldquo)
 end
 
 function Renderer:right_double_quote()
-  self.out("&rdquo;")
+  self.out(self.html_entities.rdquo)
 end
 
 function Renderer:left_single_quote()
-  self.out("&lsquo;")
+  self.out(self.html_entities.lsquo)
 end
 
 function Renderer:right_single_quote()
-  self.out("&rsquo;")
+  self.out(self.html_entities.rsquo)
 end
 
 function Renderer:ellipses()
-  self.out("&hellip;")
+  self.out(self.html_entities.hellip)
 end
 
 function Renderer:em_dash()
-  self.out("&mdash;")
+  self.out(self.html_entities.mdash)
 end
 
 function Renderer:en_dash()
-  self.out("&ndash;")
+  self.out(self.html_entities.ndash)
 end
 
 function Renderer:symbol(node)

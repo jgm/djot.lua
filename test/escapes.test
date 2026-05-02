@@ -49,5 +49,5 @@ An escaped space is a non-breaking space:
 ```
 a\ b
 .
-<p>a&nbsp;b</p>
+<p>a&#x00a0;b</p>
 ```
