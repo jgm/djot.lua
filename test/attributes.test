@@ -48,7 +48,7 @@ attribute.
 ```
 hi\{key="abc{#hi}"
 .
-<p>hi{key=&ldquo;<span id="hi">abc</span>&rdquo;</p>
+<p>hi{key=&#x201c;<span id="hi">abc</span>&#x201d;</p>
 ```
 
 ```
@@ -156,7 +156,7 @@ Attributes on different kinds of blocks:
 {.blue}
 - - - - -
 .
-<hr class="blue">
+<hr class="blue"/>
 ```
 
 ````

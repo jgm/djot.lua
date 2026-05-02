@@ -6,7 +6,7 @@ hello
 there
 .
 <p>hello</p>
-<hr>
+<hr/>
 <p>there</p>
 ```
 
@@ -18,7 +18,7 @@ hello
 there
 .
 <p>hello</p>
-<hr>
+<hr/>
 <p>there</p>
 ```
 
@@ -30,7 +30,7 @@ hello
 there
 .
 <p>hello</p>
-<hr>
+<hr/>
 <p>there</p>
 ```
 
