@@ -11,7 +11,7 @@
 
 [a_b_]: url
 .
-<p><img alt="basic image" src="url"></p>
+<p><img alt="basic image" src="url"/></p>
 ```
 
 ```
@@ -148,13 +148,13 @@ Attributes on the link override those on references:
 ```
 ![basic _image_](url)
 .
-<p><img alt="basic image" src="url"></p>
+<p><img alt="basic image" src="url"/></p>
 ```
 
 ```
 [![image](img.jpg)](url)
 .
-<p><a href="url"><img alt="image" src="img.jpg"></a></p>
+<p><a href="url"><img alt="image" src="img.jpg"/></a></p>
 ```
 
 ```
@@ -200,14 +200,14 @@ Link in image?
 ```
 ![[link](url)](img)
 .
-<p><img alt="link" src="img"></p>
+<p><img alt="link" src="img"/></p>
 ```
 
 Image in link?
 ```
 [![image](img)](url)
 .
-<p><a href="url"><img alt="image" src="img"></a></p>
+<p><a href="url"><img alt="image" src="img"/></a></p>
 ```
 
 Autolinks:

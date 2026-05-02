@@ -20,7 +20,7 @@ An escaped newline is a hard break:
 ab\
 c
 .
-<p>ab<br>
+<p>ab<br/>
 c</p>
 ```
 
@@ -30,7 +30,7 @@ There can be spaces and tabs between the backslash and the newline:
 ab\	  
 c
 .
-<p>ab<br>
+<p>ab<br/>
 c</p>
 ```
 
@@ -40,7 +40,7 @@ There can also be spaces and tabs before the backslash, which are ignored:
 ab 	 \  	
 c
 .
-<p>ab<br>
+<p>ab<br/>
 c</p>
 ```
 

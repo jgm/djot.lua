@@ -126,9 +126,12 @@ function Renderer:render_attrs(node)
   end
 end
 
-function Renderer:render_tag(tag, node)
+function Renderer:render_tag(tag, node, self_closing)
   self.out("<" .. tag)
   self:render_attrs(node)
+  if self_closing then
+    self.out("/")
+  end
   self.out(">")
 end
 
@@ -158,7 +161,7 @@ function Renderer:doc(node)
         ordered_footnotes[self.footnote_index[k]] = v
       end
     end
-    self.out('<section role="doc-endnotes">\n<hr>\n<ol>\n')
+    self.out('<section role="doc-endnotes">\n<hr/>\n<ol>\n')
     for i=1,#ordered_footnotes do
       local note = ordered_footnotes[i]
       if note then
@@ -217,7 +220,7 @@ function Renderer:heading(node)
 end
 
 function Renderer:thematic_break(node)
-  self:render_tag("hr", node)
+  self:render_tag("hr", node, true)
   self.out("\n")
 end
 
@@ -375,7 +378,7 @@ function Renderer:softbreak()
 end
 
 function Renderer:hardbreak()
-  self.out("<br>\n")
+  self.out("<br/>\n")
 end
 
 function Renderer:nbsp()
@@ -431,7 +434,7 @@ function Renderer:image(node)
   end
   -- image's attributes override reference's:
   copy_attributes(attrs, node.attr)
-  self:render_tag("img", {attr = attrs})
+  self:render_tag("img", {attr = attrs}, true)
 end
 
 function Renderer:span(node)
